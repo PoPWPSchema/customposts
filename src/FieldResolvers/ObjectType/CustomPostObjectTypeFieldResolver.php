@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace PoPWPSchema\CustomPosts\FieldResolvers\ObjectType;
 
-use Symfony\Contracts\Service\Attribute\Required;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\Engine\TypeResolvers\ScalarType\BooleanScalarTypeResolver;
 use PoPSchema\CustomPosts\TypeResolvers\ObjectType\AbstractCustomPostObjectTypeResolver;
+use Symfony\Contracts\Service\Attribute\Required;
 use WP_Post;
 
 class CustomPostObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolver
@@ -40,18 +40,18 @@ class CustomPostObjectTypeFieldResolver extends AbstractQueryableObjectTypeField
 
     public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
-        $descriptions = [
+        return match ($fieldName) {
             'isSticky' => $this->translationAPI->__('Determines whether a custom post is sticky', 'customposts'),
-        ];
-        return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
+            default => parent::getSchemaFieldDescription($objectTypeResolver, $fieldName),
+        };
     }
 
     public function getFieldTypeResolver(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ConcreteTypeResolverInterface
     {
-        $types = [
+        return match ($fieldName) {
             'isSticky' => $this->booleanScalarTypeResolver,
-        ];
-        return $types[$fieldName] ?? parent::getFieldTypeResolver($objectTypeResolver, $fieldName);
+            default => parent::getFieldTypeResolver($objectTypeResolver, $fieldName),
+        };
     }
 
     public function getSchemaFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?int
