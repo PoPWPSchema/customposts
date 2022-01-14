@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace PoPWPSchema\CustomPosts\SchemaHooks;
 
+use PoP\Root\App;
 use PoP\ComponentModel\TypeResolvers\EnumType\EnumTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\EnumType\HookNames;
-use PoP\BasicService\AbstractHookSet;
+use PoP\Root\Hooks\AbstractHookSet;
 use PoPSchema\CustomPosts\TypeResolvers\EnumType\FilterCustomPostStatusEnumTypeResolver;
 use PoPWPSchema\CustomPosts\Enums\CustomPostStatus;
 
@@ -14,19 +15,19 @@ class FilterCustomPostStatusEnumTypeHookSet extends AbstractHookSet
 {
     protected function init(): void
     {
-        $this->getHooksAPI()->addFilter(
+        App::addFilter(
             HookNames::ENUM_VALUES,
             [$this, 'getEnumValues'],
             10,
             2
         );
-        $this->getHooksAPI()->addFilter(
+        App::addFilter(
             HookNames::ADMIN_ENUM_VALUES,
             [$this, 'getAdminEnumValues'],
             10,
             2
         );
-        $this->getHooksAPI()->addFilter(
+        App::addFilter(
             HookNames::ENUM_VALUE_DESCRIPTION,
             [$this, 'getEnumValueDescription'],
             10,
