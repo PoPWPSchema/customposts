@@ -170,7 +170,7 @@ class CustomPostObjectTypeFieldResolver extends AbstractQueryableObjectTypeField
                 if (!user_can($userID, 'edit_post', $customPost->ID)) {
                     return null;
                 }
-                return \get_edit_post_link($customPost, 'raw');
+                return \get_edit_post_link($customPost);
             case 'menuOrder':
                 return $customPost->menu_order;
         }
