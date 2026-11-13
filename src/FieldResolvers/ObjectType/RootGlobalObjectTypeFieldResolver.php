@@ -14,8 +14,6 @@ use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ScalarType\IDScalarTypeResolver;
 use PoPSchema\SchemaCommons\TypeResolvers\ScalarType\URLScalarTypeResolver;
 use PoP\GraphQLParser\Spec\Parser\Ast\FieldInterface;
-use PoP\Root\App;
-use PoPWPSchema\CustomPosts\Constants\HookNames;
 
 class RootGlobalObjectTypeFieldResolver extends AbstractGlobalObjectTypeFieldResolver
 {
@@ -111,12 +109,6 @@ class RootGlobalObjectTypeFieldResolver extends AbstractGlobalObjectTypeFieldRes
                 if ($postID === 0) {
                     return null;
                 }
-                /** @var int */
-                $postID = App::applyFilters(
-                    HookNames::URL_TO_CUSTOM_POST_ID,
-                    $postID,
-                    $url
-                );
                 return $postID;
         }
 
